@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_stripe',
 ]
 
 MIDDLEWARE = [
@@ -126,4 +127,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}
+
+DRF_STRIPE = {
+    "STRIPE_API_SECRET": "my_stripe_api_key",
+    "STRIPE_WEBHOOK_SECRET": "my_stripe_webhook_key",
+    "FRONT_END_BASE_URL": "http://localhost:3000",
 }
