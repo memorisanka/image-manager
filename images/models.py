@@ -28,8 +28,13 @@ class Image(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     original_image = models.ImageField(upload_to='images')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.thumbnail_400 = None
+        self.thumbnail_200 = None
+
     def create_thumbnail(self, max_height):
-        with BytesIO(self.original_file.read()) as file:
+        with BytesIO(self.original_image.read()) as file:
             with PilImage.open(file) as image:
                 # calculate new width and height
                 width, height = image.size
@@ -43,8 +48,8 @@ class Image(models.Model):
                 thumbnail.save(buffer, format='PNG')
                 # save buffer to image field
                 if max_height == 200:
-                    self.thumbnail_200.save(self.original_file.name, ContentFile(buffer.getvalue()), save=False)
+                    self.thumbnail_200.save(self.original_image.name, ContentFile(buffer.getvalue()), save=False)
                 elif max_height == 400:
-                    self.thumbnail_400.save(self.original_file.name, ContentFile(buffer.getvalue()), save=False)
+                    self.thumbnail_400.save(self.original_image.name, ContentFile(buffer.getvalue()), save=False)
                 else:
                     raise ValueError('Invalid max height')
