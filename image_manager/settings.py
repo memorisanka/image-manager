@@ -137,4 +137,3 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media/')
 
 MEDIA_URL = ''
 
-AUTH_USER_MODEL = 'images.User'

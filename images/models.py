@@ -1,13 +1,12 @@
 from io import BytesIO
 
 from PIL import Image as PilImage
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, User
 from django.core.files.base import ContentFile
 from django.db import models
 
 
-class User(AbstractUser):
+class Profile(models.Model):
     BASIC = 'basic'
     PREMIUM = 'premium'
     ENTERPRISE = 'enterprise'
@@ -18,11 +17,12 @@ class User(AbstractUser):
         (ENTERPRISE, 'Enterprise'),
     ]
 
+    parent = models.OneToOneField(User, on_delete=models.CASCADE)
     plan = models.CharField(max_length=20, choices=PLAN_CHOICES, default=BASIC)
 
 
 class Image(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
     original_file = models.ImageField(upload_to='images')
     thumbnail_200 = models.ImageField(upload_to='thumbnails', null=True, blank=True)
     thumbnail_400 = models.ImageField(upload_to='thumbnails', null=True, blank=True)
