@@ -27,11 +27,8 @@ class Profile(models.Model):
 class Image(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     original_image = models.ImageField(upload_to='images')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(args, kwargs)
-        self.thumbnail_400 = None
-        self.thumbnail_200 = None
+    thumbnail_200 = models.ImageField(upload_to='images/thumbnails/200/', null=True, blank=True)
+    thumbnail_400 = models.ImageField(upload_to='images/thumbnails/400/', null=True, blank=True)
 
     def create_thumbnail(self, max_height):
         with BytesIO(self.original_image.read()) as file:
