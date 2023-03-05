@@ -14,12 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path
 
-from images.views import FileUploadView
+from images.views import ImageUploadView, ImageView, ThumbnailView, ExpireLinkView, ImageList
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    re_path(r'^upload/(?P<filename>[^/]+)$', FileUploadView.as_view())
+    path("admin/", admin.site.urls),
+    path('', ImageList.as_view({'get': 'list'}), name='image-list'),
+    path('images/', ImageUploadView.as_view(), name='image-upload'),
+    path('images/<int:image_id>/', ImageView.as_view(), name='image-detail'),
+    path('images/<int:image_id>/thumbnail/<int:size>/', ThumbnailView.as_view(), name='image-thumbnail'),
+    path('images/<int:image_id>/expire-link/', ExpireLinkView.as_view(), name='image-expire-link'),
 ]
