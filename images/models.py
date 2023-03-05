@@ -17,15 +17,16 @@ class Profile(models.Model):
         (ENTERPRISE, 'Enterprise'),
     ]
 
-    parent = models.OneToOneField(User, on_delete=models.CASCADE)
+    parent_name = models.OneToOneField(User, on_delete=models.CASCADE)
     plan = models.CharField(max_length=20, choices=PLAN_CHOICES, default=BASIC)
+
+    def __str__(self):
+        return self.parent_name
 
 
 class Image(models.Model):
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    original_file = models.ImageField(upload_to='images')
-    thumbnail_200 = models.ImageField(upload_to='thumbnails', null=True, blank=True)
-    thumbnail_400 = models.ImageField(upload_to='thumbnails', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    original_image = models.ImageField(upload_to='images')
 
     def create_thumbnail(self, max_height):
         with BytesIO(self.original_file.read()) as file:

@@ -15,4 +15,4 @@ class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = ('id', 'owner', 'original_file', 'thumbnail_200', 'thumbnail_400')
+        fields = ('id', 'owner', 'original_image',)

@@ -37,9 +37,9 @@ class ImageDetail(generics.RetrieveUpdateDestroyAPIView):
 @csrf_exempt
 def image_upload(request):
     # check if the user has the necessary plan for uploading images
-    if request.user.plan == 'Basic':
+    if request.user.profile.plan == 'Basic':
         max_thumbnail_height = 200
-    elif request.user.plan == 'Premium' or request.user.plan == 'Enterprise':
+    elif request.user.profile.plan == 'Premium' or request.user.profile.plan == 'Enterprise':
         max_thumbnail_height = 400
     else:
         raise PermissionDenied
@@ -52,7 +52,7 @@ def image_upload(request):
 
     # create thumbnails and set image urls
     image.create_thumbnail(max_thumbnail_height)
-    if request.user.plan == 'Premium' or request.user.plan == 'Enterprise':
+    if request.user.profile.plan == 'Premium' or request.user.profile.plan == 'Enterprise':
         image.create_thumbnail(200)
         image_url = request.build_absolute_uri(image.original_file.url)
     else:
@@ -69,7 +69,7 @@ def image_upload(request):
 @permission_classes([permissions.IsAuthenticated])
 def image_link(request):
     # check if the user has the necessary plan for generating expiring links
-    if request.user.plan != 'Enterprise':
+    if request.user.profile.plan != 'Enterprise':
         raise PermissionDenied
 
     # parse expiration time from request data
