@@ -48,13 +48,13 @@ def image_upload(request):
     parser_classes = (FileUploadParser,)
     file = request.data['file']
     filename = file.name
-    image = Image(owner=request.user, original_file=file)
+    image = Image(owner=request.user, original_image=file)
 
     # create thumbnails and set image urls
     image.create_thumbnail(max_thumbnail_height)
     if request.user.profile.plan == 'Premium' or request.user.profile.plan == 'Enterprise':
         image.create_thumbnail(200)
-        image_url = request.build_absolute_uri(image.original_file.url)
+        image_url = request.build_absolute_uri(image.original_image.url)
     else:
         image_url = None
     image.save()

@@ -24,6 +24,5 @@ urlpatterns = [
     path('', ImageList.as_view(), name='image-list'),
     path('images/', views.image_upload, name='image-upload'),
     path('images/<int:image_id>/', ImageDetail.as_view(), name='image-detail'),
-    # path('images/<int:image_id>/thumbnail/<int:size>/', ThumbnailView.as_view(), name='image-thumbnail'),
     path('images/<int:image_id>/expire-link/', views.image_link, name='image-expire-link'),
 ]
