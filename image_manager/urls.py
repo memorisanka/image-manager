@@ -13,16 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from images import views
 from django.contrib import admin
 from django.urls import path
 
-from images.views import ImageUploadView, ImageView, ThumbnailView, ExpireLinkView, ImageList
+from images.views import ImageDetail, ImageList
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', ImageList.as_view({'get': 'list'}), name='image-list'),
-    path('images/', ImageUploadView.as_view(), name='image-upload'),
-    path('images/<int:image_id>/', ImageView.as_view(), name='image-detail'),
-    path('images/<int:image_id>/thumbnail/<int:size>/', ThumbnailView.as_view(), name='image-thumbnail'),
-    path('images/<int:image_id>/expire-link/', ExpireLinkView.as_view(), name='image-expire-link'),
+    path('', ImageList.as_view(), name='image-list'),
+    path('images/', views.image_upload, name='image-upload'),
+    path('images/<int:image_id>/', ImageDetail.as_view(), name='image-detail'),
+    # path('images/<int:image_id>/thumbnail/<int:size>/', ThumbnailView.as_view(), name='image-thumbnail'),
+    path('images/<int:image_id>/expire-link/', views.image_link, name='image-expire-link'),
 ]
