@@ -23,7 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', ImageList.as_view(), name='image-list'),
     re_path(r'images/(?P<pk>\d+)/', ImageDetail.as_view(), name='image-detail'),
-    path('img/<int:image_id>/', MyView.as_view()),
+    path('img/<int:image_id>/', MyView.as_view(), name='image-thumbnail'),
     path('images/<int:image_id>/expire-link/', views.image_link, name='image-expire-link'),
 ]
 
