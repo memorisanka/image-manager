@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 
 from images import views
 from images.views import ImageDetail, ImageList, MyView
@@ -22,8 +22,7 @@ from images.views import ImageDetail, ImageList, MyView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', ImageList.as_view(), name='image-list'),
-    path('images/', views.image_upload, name='image-upload'),
-    path(r'images/(?P<pk>\d+)/', ImageDetail.as_view(), name='image-detail'),
+    re_path(r'images/(?P<pk>\d+)/', ImageDetail.as_view(), name='image-detail'),
     path('img/<int:image_id>/', MyView.as_view()),
     path('images/<int:image_id>/expire-link/', views.image_link, name='image-expire-link'),
 ]
