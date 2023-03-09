@@ -21,7 +21,7 @@ class Profile(models.Model):
     plan = models.CharField(max_length=20, choices=PLAN_CHOICES, default=BASIC)
 
     def __str__(self):
-        return self.parent_name
+        return self.parent_name.username
 
 
 class Image(models.Model):
@@ -50,3 +50,13 @@ class Image(models.Model):
                     self.thumbnail_400.save(self.original_image.name, ContentFile(buffer.getvalue()), save=False)
                 else:
                     raise ValueError('Invalid max height')
+
+# class ExpiringLink():
+#     id = 'abc123abc'
+#     expire_at = DateTime(...)
+#     image = models.ForeignKey(Image, on_delete=models.CASCADE)
+#
+#     """
+#     if time.now() > expire_at:
+#        nie działa
+#     """

@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path
 
 from images import views
-from images.views import ImageDetail, ImageList
+from images.views import ImageDetail, ImageList, MyView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', ImageList.as_view(), name='image-list'),
     path('images/', views.image_upload, name='image-upload'),
-    path('images/<int:image_id>/', ImageDetail.as_view(), name='image-detail'),
+    path(r'images/(?P<pk>\d+)/', ImageDetail.as_view(), name='image-detail'),
+    path('img/<int:image_id>/', MyView.as_view()),
     path('images/<int:image_id>/expire-link/', views.image_link, name='image-expire-link'),
 ]
+
+# (?P<pk>\d+)
