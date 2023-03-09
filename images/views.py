@@ -36,7 +36,8 @@ class ImageList(generics.ListCreateAPIView):
 
 
 class MyView(View):
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         image_id = kwargs['image_id']
         image = MyImage.objects.get(id=image_id)
 
