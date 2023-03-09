@@ -30,6 +30,6 @@ def generate_thumbnail(image, size):
 
 class MyImage(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    original_image = models.ImageField(upload_to=f'images/')
+    original_image = models.ImageField(upload_to='img/')
     thumbnail_200 = models.ImageField(upload_to='img/thumbnails/200x200/', null=True, blank=True)
     thumbnail_400 = models.ImageField(upload_to='img/thumbnails/400x400/', null=True, blank=True)
