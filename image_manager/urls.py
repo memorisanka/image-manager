@@ -13,18 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path
 
+from image_manager import settings
 from images import views
 from images.views import ImageDetail, ImageList, MyView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('', ImageList.as_view(), name='image-list'),
-    re_path(r'images/(?P<pk>\d+)/', ImageDetail.as_view(), name='image-detail'),
-    path('img/<int:image_id>/', MyView.as_view(), name='image-thumbnail'),
-    path('images/<int:image_id>/expire-link/', views.image_link, name='image-expire-link'),
-]
+                  path("admin/", admin.site.urls),
+                  path('', ImageList.as_view(), name='image-list'),
+                  re_path(r'images/(?P<pk>\d+)/', ImageDetail.as_view(), name='image-detail'),
+                  path('img/<int:image_id>/', MyView.as_view(), name='image-thumbnail'),
+                  path('images/<int:image_id>/expire-link/', views.image_link, name='image-expire-link'),
+              ]
 
-# (?P<pk>\d+)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
