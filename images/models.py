@@ -27,16 +27,3 @@ class MyImage(models.Model):
     original_image = models.ImageField(upload_to=f"img/")
     thumbnail_200 = models.ImageField(upload_to=f"img/thumb_200/", null=True, blank=True)
     thumbnail_400 = models.ImageField(upload_to=f"img/thumb_400/", null=True, blank=True)
-
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #
-    #     img = Image.open(self.original_image.path)
-    #     size_200 = (200, 200)
-    #     img.thumbnail(size_200)
-    #     img.save(self.thumbnail_200.path)
-    #
-    #     img = Image.open(self.original_image.path)
-    #     size_400 = (400, 400)
-    #     img.thumbnail(size_400)
-    #     img.save(self.thumbnail_400.path)
