@@ -22,14 +22,21 @@ class Profile(models.Model):
         return self.parent_name.username
 
 
-def generate_thumbnail(image, size):
-    img = Image.open(image)
-    img.thumbnail((size, size))
-    return img
-
-
 class MyImage(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    original_image = models.ImageField(upload_to='img/')
-    thumbnail_200 = models.ImageField(upload_to='img/thumbnails/200x200/', null=True, blank=True)
-    thumbnail_400 = models.ImageField(upload_to='img/thumbnails/400x400/', null=True, blank=True)
+    original_image = models.ImageField(upload_to=f"img/")
+    thumbnail_200 = models.ImageField(upload_to=f"img/thumb_200/", null=True, blank=True)
+    thumbnail_400 = models.ImageField(upload_to=f"img/thumb_400/", null=True, blank=True)
+
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #
+    #     img = Image.open(self.original_image.path)
+    #     size_200 = (200, 200)
+    #     img.thumbnail(size_200)
+    #     img.save(self.thumbnail_200.path)
+    #
+    #     img = Image.open(self.original_image.path)
+    #     size_400 = (400, 400)
+    #     img.thumbnail(size_400)
+    #     img.save(self.thumbnail_400.path)
